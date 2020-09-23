@@ -25,24 +25,30 @@ function EnttecOpenUsbDMX(device_id, options) {
 	})
 }
 
-EnttecOpenUsbDMX.prototype.send_universe = function() {
-	console.log("EnttecOpenUsbDMX send_universe");
-	var self = this
-	if(!this.dev.isOpen()) {
-		return
-	}
+EnttecOpenUsbDMX.prototype.sendUniverse = function () {
+  const self = this;
 
-	// toggle break
-	self.dev.set({brk: true}, function(err, r) {
-		setTimeout(function() {
-			self.dev.set({brk: false}, function(err, r) {
-				setTimeout(function() {
-					self.dev.write(Buffer.concat([Buffer([0]), self.universe]))
-				}, 1)
-			})
-		}, 1)
-	})
-}
+  if (!this.dev.writable) {
+    return;
+  }
+
+  // toggle break
+  self.dev.set({brk: true, rts: true}, (err, r) => {
+    setTimeout(() => {
+      self.dev.set({brk: false, rts: true}, (err, r) => {
+        setTimeout(() => {
+          if (self.readyToWrite) {
+            self.readyToWrite = false;
+            self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]));
+            self.dev.drain(() => {
+              self.readyToWrite = true;
+            });
+          }
+        }, 1);
+      });
+    }, 1);
+  });
+};
 
 EnttecOpenUsbDMX.prototype.start = function() {
 	this.intervalhandle = setInterval(this.send_universe.bind(this), this.interval)
