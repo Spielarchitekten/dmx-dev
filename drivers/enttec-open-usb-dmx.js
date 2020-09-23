@@ -116,5 +116,5 @@ EnttecOpenUsbDMX.prototype.get = function(c) {
 	return this.universe[c]
 }
 
-util.inherits(EnttecOpenUsbDMX, EventEmitter);
+// util.inherits(EnttecOpenUsbDMX, EventEmitter);
 module.exports = EnttecOpenUsbDMX
