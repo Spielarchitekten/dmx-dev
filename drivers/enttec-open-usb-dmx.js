@@ -6,10 +6,10 @@ function EnttecOpenUsbDMX(device_id, options) {
 	var self = this
 	options = options || {}
 
-	this.universe = new Buffer(512)
+	this.universe = Buffer.alloc(513)
 	this.universe.fill(0)
 
-	self.interval = 46
+	self.interval = 512
 
 	this.dev = new SerialPort(device_id, {
 		'baudrate': 250000,
