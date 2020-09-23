@@ -23,19 +23,23 @@ DMX.devices   = require('./devices')
 DMX.Animation = require('./anim')
 
 DMX.prototype.registerDriver = function(name, module) {
+	console.log("registerDriver: "+name);
 	this.drivers[name] = module
 }
 
 DMX.prototype.addUniverse = function(name, driver, device_id) {
+	console.log("addUniverse: "+name);
 	return this.universes[name] = new this.drivers[driver](device_id)
 }
 
 DMX.prototype.update = function(universe, channels) {
+	console.log("update: "+universe);
 	this.universes[universe].update(channels)
 	this.emit('update', universe, channels)
 }
 
 DMX.prototype.updateAll = function(universe, value) {
+	console.log("updateAll: "+universe);
 	this.universes[universe].updateAll(value)
 	this.emit('updateAll', universe, value)
 }
