@@ -33,7 +33,7 @@ DMX.prototype.addUniverse = function(name, driver, device_id) {
 }
 
 DMX.prototype.update = function(universe, channels) {
-	console.log("update: "+universe);
+	console.log("update: " + universe + " \nchannels:"+ channels);
 	this.universes[universe].update(channels)
 	this.emit('update', universe, channels)
 }
