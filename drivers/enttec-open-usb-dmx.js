@@ -6,11 +6,12 @@ function EnttecOpenUsbDMX(device_id, options) {
 	var self = this
 	options = options || {}
 
-	this.universe = new Buffer(513)
-	// this.universe.fill(0)
+	this.universe = new Buffer(512)
+	this.universe.fill(0)
 
-	self.interval = 512
+	self.interval = 42
 
+	console.log("\nUSB interfaces:"\n);
 	SerialPort.list(function (err, ports) {
 	  ports.forEach(function(port) {
 	    console.log(port.comName);
