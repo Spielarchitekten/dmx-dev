@@ -102,7 +102,7 @@ EnttecOpenUsbDMX.prototype.update = function(u) {
 	for(var c in u) {
 		this.universe[c] = u[c]
 	}
-	this.emit('update',u);
+	// this.emit('update',u);
 }
 
 EnttecOpenUsbDMX.prototype.updateAll = function(v) {
