@@ -45,7 +45,7 @@ console.log("EnttecOpenUsbDMX send_universe");
 }
 
 EnttecOpenUsbDMX.prototype.sendUniverse = function () {
-		console.log("EnttecOpenUsbDMX send_universe");
+	// console.log("EnttecOpenUsbDMX sendUniverse");
   const self = this;
 
   if (!this.dev.writable) {
@@ -58,6 +58,7 @@ EnttecOpenUsbDMX.prototype.sendUniverse = function () {
       self.dev.set({brk: false, rts: true}, (err, r) => {
         setTimeout(() => {
           if (self.readyToWrite) {
+						console.log("readyToWrite");
             self.readyToWrite = false;
             self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]));
             self.dev.drain(() => {
