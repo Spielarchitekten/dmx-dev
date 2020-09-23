@@ -9,7 +9,7 @@ function EnttecOpenUsbDMX(device_id, options) {
 	this.universe = new Buffer(513)
 	this.universe.fill(0)
 
-	self.interval = 512
+	self.interval = 46
 
 	this.dev = new SerialPort(device_id, {
 		'baudrate': 250000,
@@ -26,6 +26,7 @@ function EnttecOpenUsbDMX(device_id, options) {
 }
 
 EnttecOpenUsbDMX.prototype.send_universe = function() {
+	console.log("EnttecOpenUsbDMX send_universe");
 	var self = this
 	if(!this.dev.isOpen()) {
 		return
