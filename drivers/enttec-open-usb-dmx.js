@@ -25,7 +25,27 @@ function EnttecOpenUsbDMX(device_id, options) {
 	})
 }
 
+EnttecOpenUsbDMX.prototype.send_universe = function() {
+console.log("EnttecOpenUsbDMX send_universe");
+	var self = this
+	if(!this.dev.isOpen()) {
+		return
+	}
+
+	// toggle break
+	self.dev.set({brk: true}, function(err, r) {
+		setTimeout(function() {
+			self.dev.set({brk: false}, function(err, r) {
+				setTimeout(function() {
+					self.dev.write(Buffer.concat([Buffer([0]), self.universe]))
+				}, 1)
+			})
+		}, 1)
+	})
+}
+
 EnttecOpenUsbDMX.prototype.sendUniverse = function () {
+		console.log("EnttecOpenUsbDMX send_universe");
   const self = this;
 
   if (!this.dev.writable) {
@@ -51,7 +71,7 @@ EnttecOpenUsbDMX.prototype.sendUniverse = function () {
 };
 
 EnttecOpenUsbDMX.prototype.start = function() {
-	this.intervalhandle = setInterval(this.send_universe.bind(this), this.interval)
+	this.intervalhandle = setInterval(this.sendUniverse.bind(this), this.interval)
 }
 
 EnttecOpenUsbDMX.prototype.stop = function() {
