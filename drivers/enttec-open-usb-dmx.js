@@ -1,12 +1,14 @@
 "use strict"
 
 var SerialPort = require("serialport")
+const util = require('util');
+const EventEmitter = require('events').EventEmitter;
 
 function EnttecOpenUsbDMX(device_id, options) {
 	var self = this
 	options = options || {}
 
-	this.universe = new Buffer(512)
+	this.universe = new Buffer(513)
 	this.universe.fill(0)
 
 	self.interval = 42
@@ -100,6 +102,7 @@ EnttecOpenUsbDMX.prototype.update = function(u) {
 	for(var c in u) {
 		this.universe[c] = u[c]
 	}
+	this.emit('update',u);
 }
 
 EnttecOpenUsbDMX.prototype.updateAll = function(v) {
@@ -113,4 +116,5 @@ EnttecOpenUsbDMX.prototype.get = function(c) {
 	return this.universe[c]
 }
 
+util.inherits(EnttecOpenUsbDMX, EventEmitter);
 module.exports = EnttecOpenUsbDMX
