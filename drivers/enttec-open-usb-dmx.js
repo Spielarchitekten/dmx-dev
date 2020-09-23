@@ -8,7 +8,7 @@ function EnttecOpenUsbDMX(device_id, options) {
 	var self = this
 	options = options || {}
 
-	this.universe = new Buffer(513)
+	this.universe = new Buffer(512)
 	this.universe.fill(0)
 
 	self.interval = 42
@@ -18,8 +18,6 @@ function EnttecOpenUsbDMX(device_id, options) {
 	  ports.forEach(function(port) {
 			if ( port.comName.indexOf("/dev/") !== -1 ) {
 	    	console.log(port.comName);
-	    	console.log(port.pnpId);
-	    	console.log(port.manufacturer);
 			}
 	  });
 	});
