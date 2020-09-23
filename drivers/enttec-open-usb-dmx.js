@@ -11,6 +11,14 @@ function EnttecOpenUsbDMX(device_id, options) {
 
 	self.interval = 46
 
+	SerialPort.list(function (err, ports) {
+	  ports.forEach(function(port) {
+	    console.log(port.comName);
+	    console.log(port.pnpId);
+	    console.log(port.manufacturer);
+	  });
+	});
+
 	this.dev = new SerialPort(device_id, {
 		'baudrate': 250000,
 		'databits': 8,
@@ -24,6 +32,8 @@ function EnttecOpenUsbDMX(device_id, options) {
 		self.start()
 	})
 }
+
+
 
 EnttecOpenUsbDMX.prototype.send_universe = function() {
 console.log("EnttecOpenUsbDMX send_universe");
