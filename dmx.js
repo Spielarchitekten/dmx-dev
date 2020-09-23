@@ -9,12 +9,12 @@ function DMX(options) {
 	this.drivers   = {}
 	this.devices   = options.devices || require('./devices')
 
-	this.registerDriver('null',                require('./drivers/null'))
-	this.registerDriver('dmx4all',             require('./drivers/dmx4all'))
-	this.registerDriver('enttec-usb-dmx-pro',  require('./drivers/enttec-usb-dmx-pro'))
+	// this.registerDriver('null',                require('./drivers/null'))
+	// this.registerDriver('dmx4all',             require('./drivers/dmx4all'))
+	// this.registerDriver('enttec-usb-dmx-pro',  require('./drivers/enttec-usb-dmx-pro'))
 	this.registerDriver('enttec-open-usb-dmx', require('./drivers/enttec-open-usb-dmx'))
-	this.registerDriver('artnet',              require('./drivers/artnet'))
-	this.registerDriver('bbdmx',               require('./drivers/bbdmx'))
+	// this.registerDriver('artnet',              require('./drivers/artnet'))
+	// this.registerDriver('bbdmx',               require('./drivers/bbdmx'))
 }
 
 util.inherits(DMX, EventEmitter)
@@ -28,7 +28,7 @@ DMX.prototype.registerDriver = function(name, module) {
 }
 
 DMX.prototype.addUniverse = function(name, driver, device_id) {
-	console.log("addUniverse: "+name);
+	console.log("adding universe: "+name);
 	return this.universes[name] = new this.drivers[driver](device_id)
 }
 
