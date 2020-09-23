@@ -14,11 +14,13 @@ function EnttecOpenUsbDMX(device_id, options) {
 	self.interval = 42
 
 	SerialPort.list(function (err, ports) {
-		console.log("\nUSB interfaces:\n");
+		console.log("\nUSB interfaces found:\n");
 	  ports.forEach(function(port) {
-	    console.log(port.comName);
-	    console.log(port.pnpId);
-	    console.log(port.manufacturer);
+			if ( port.comName.indexOf("/dev/") !== -1 ) {
+	    	console.log(port.comName);
+	    	console.log(port.pnpId);
+	    	console.log(port.manufacturer);
+			}
 	  });
 	});
 
