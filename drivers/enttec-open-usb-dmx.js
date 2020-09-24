@@ -6,7 +6,7 @@ const EventEmitter = require('events').EventEmitter;
 
 function EnttecOpenUsbDMX(device_id, options) {
 
-	/*
+
 	// debugging: find the correct path
 	SerialPort.list(function (err, ports) {
 		console.log("\nUSB interfaces found:\n");
@@ -16,7 +16,7 @@ function EnttecOpenUsbDMX(device_id, options) {
 			}
 	  });
 	});
-	*/
+	
 
 	var self = this
 	options = options || {}
