@@ -41,7 +41,7 @@ function EnttecOpenUsbDMX(device_id, options) {
 
 EnttecOpenUsbDMX.prototype.send_universe = function() {
 	var self = this
-	if(!this.dev.writable) {
+	if(!this.dev.isOpen()) {
 		return
 	}
 
