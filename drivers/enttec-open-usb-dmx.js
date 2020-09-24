@@ -16,12 +16,12 @@ function EnttecOpenUsbDMX(device_id, options) {
 			}
 	  });
 	});
-	
+
 
 	var self = this
 	options = options || {}
 
-	this.universe = new Buffer(513)
+	this.universe = new Buffer(512)
 	this.universe.fill(0)
 	self.interval = 46
 
@@ -50,7 +50,8 @@ EnttecOpenUsbDMX.prototype.send_universe = function() {
 		setTimeout(function() {
 			self.dev.set({brk: false, rts: true}, function(err, r) {
 				setTimeout(function() {
-					self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]))
+					//self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]))
+					self.dev.write(Buffer.concat([Buffer([0]), self.universe]))
 				}, 1)
 			})
 		}, 1)
