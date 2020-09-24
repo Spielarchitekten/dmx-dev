@@ -58,10 +58,8 @@ EnttecOpenUsbDMX.prototype.send_universe = function() {
 }
 
 EnttecOpenUsbDMX.prototype.sendUniverse = function () {
-	// console.log("EnttecOpenUsbDMX sendUniverse");
   const self = this;
-
-  if (!this.dev.writable) {
+  if (!this.dev.isOpen()) {
     return;
   }
 
