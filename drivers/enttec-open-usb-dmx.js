@@ -5,14 +5,9 @@ const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 
 function EnttecOpenUsbDMX(device_id, options) {
-	var self = this
-	options = options || {}
 
-	this.universe = new Buffer(512)
-	this.universe.fill(0)
-
-	self.interval = 42
-
+	/*
+	// debugging: find the correct path
 	SerialPort.list(function (err, ports) {
 		console.log("\nUSB interfaces found:\n");
 	  ports.forEach(function(port) {
@@ -21,6 +16,14 @@ function EnttecOpenUsbDMX(device_id, options) {
 			}
 	  });
 	});
+	*/
+
+	var self = this
+	options = options || {}
+
+	this.universe = new Buffer(513)
+	this.universe.fill(0)
+	self.interval = 46
 
 	this.dev = new SerialPort(device_id, {
 		'baudrate': 250000,
@@ -36,19 +39,16 @@ function EnttecOpenUsbDMX(device_id, options) {
 	})
 }
 
-
-
 EnttecOpenUsbDMX.prototype.send_universe = function() {
-//console.log("EnttecOpenUsbDMX send_universe");
 	var self = this
-	if(!this.dev.isOpen()) {
+	if(!this.dev.writable) {
 		return
 	}
 
 	// toggle break
-	self.dev.set({brk: true}, function(err, r) {
+	self.dev.set({brk: true, rts: true}, function(err, r) {
 		setTimeout(function() {
-			self.dev.set({brk: false}, function(err, r) {
+			self.dev.set({brk: false, rts: true}, function(err, r) {
 				setTimeout(function() {
 					self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]))
 				}, 1)
@@ -56,31 +56,6 @@ EnttecOpenUsbDMX.prototype.send_universe = function() {
 		}, 1)
 	})
 }
-
-EnttecOpenUsbDMX.prototype.sendUniverse = function () {
-  const self = this;
-  if (!this.dev.isOpen()) {
-    return;
-  }
-
-  // toggle break
-  self.dev.set({brk: true, rts: true}, (err, r) => {
-    setTimeout(() => {
-      self.dev.set({brk: false, rts: true}, (err, r) => {
-        setTimeout(() => {
-          if (self.readyToWrite) {
-						console.log("readyToWrite");
-            self.readyToWrite = false;
-            self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]));
-            self.dev.drain(() => {
-              self.readyToWrite = true;
-            });
-          }
-        }, 1);
-      });
-    }, 1);
-  });
-};
 
 EnttecOpenUsbDMX.prototype.start = function() {
 	this.intervalhandle = setInterval(this.send_universe.bind(this), this.interval)
@@ -96,7 +71,7 @@ EnttecOpenUsbDMX.prototype.close = function(cb) {
 }
 
 EnttecOpenUsbDMX.prototype.update = function(u) {
-	console.log("EnttecOpenUsbDMX update: ", u);
+	console.log("\nEnttecOpenUsbDMX update: ", u);
 	for(var c in u) {
 		this.universe[c] = u[c]
 	}
@@ -104,7 +79,7 @@ EnttecOpenUsbDMX.prototype.update = function(u) {
 }
 
 EnttecOpenUsbDMX.prototype.updateAll = function(v) {
-	console.log("EnttecOpenUsbDMX updateAll: ", v);
+	console.log("\nEnttecOpenUsbDMX updateAll: ", v);
 	for(var i = 0; i < 512; i++) {
 		this.universe[i] = v
 	}
