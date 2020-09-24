@@ -96,7 +96,7 @@ EnttecOpenUsbDMX.prototype.close = function(cb) {
 }
 
 EnttecOpenUsbDMX.prototype.update = function(u) {
-	console.log("EnttecOpenUsbDMX update: "+u);
+	console.log("EnttecOpenUsbDMX update: ", u);
 	for(var c in u) {
 		this.universe[c] = u[c]
 	}
@@ -104,7 +104,7 @@ EnttecOpenUsbDMX.prototype.update = function(u) {
 }
 
 EnttecOpenUsbDMX.prototype.updateAll = function(v) {
-	console.log("EnttecOpenUsbDMX updateAll: "+v);
+	console.log("EnttecOpenUsbDMX updateAll: ", v);
 	for(var i = 0; i < 512; i++) {
 		this.universe[i] = v
 	}
