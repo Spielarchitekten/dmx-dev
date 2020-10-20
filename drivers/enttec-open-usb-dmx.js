@@ -1,13 +1,9 @@
 "use strict"
-
 var SerialPort = require("serialport")
-//const util = require('util');
-//const EventEmitter = require('events').EventEmitter;
 
 function EnttecOpenUsbDMX(device_id, options) {
 
-
-	// debugging: find the correct path
+	// for debugging: find the correct path of device
 	SerialPort.list(function (err, ports) {
 		console.log("\nUSB interfaces found:\n");
 	  ports.forEach(function(port) {
@@ -17,12 +13,11 @@ function EnttecOpenUsbDMX(device_id, options) {
 	  });
 	});
 
-
 	var self = this
 	options = options || {}
 
 	this.universe = new Buffer(513)
-  this.readyToWrite = true;
+	this.universe.fill(0);
   this.interval = 46;
 
   this.dev = new SerialPort(device_id, {
@@ -51,6 +46,7 @@ EnttecOpenUsbDMX.prototype.send_universe = function() {
 		setTimeout(function() {
 			self.dev.set({brk: false, rts: true}, function(err, r) {
 				setTimeout(function() {
+					console.log("\nwrite: ", Buffer.concat([Buffer([0]), self.universe.slice(1)]));
 					self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]));
 				}, 1)
 			})
