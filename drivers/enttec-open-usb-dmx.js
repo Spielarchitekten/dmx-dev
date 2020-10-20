@@ -25,7 +25,7 @@ function EnttecOpenUsbDMX(device_id, options) {
   this.readyToWrite = true;
   this.interval = 46;
 
-  this.dev = new SerialPort(deviceId, {
+  this.dev = new SerialPort(device_id, {
     'baudRate': 250000,
     'dataBits': 8,
     'stopBits': 2,
