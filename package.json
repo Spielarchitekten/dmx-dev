@@ -17,9 +17,9 @@
 				"light control"
 		],
 		"dependencies": {
-				"serialport": "^2.0.6",
+				"serialport": "^4.0.7",
 	      "socket.io": 	"^1.4.8",
-				"connect":    "2.11.x",
+				"connect":    "3.7.0",
 				"express":    "^4.13.4",
 				"commander":  "2.0.x"
 		},
