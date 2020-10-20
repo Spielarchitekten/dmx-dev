@@ -41,6 +41,7 @@ EnttecOpenUsbDMX.prototype.send_universe = function() {
 		return
 	}
 
+
 	// toggle break
 	self.dev.set({brk: true, rts: true}, function(err, r) {
 		setTimeout(function() {
@@ -52,13 +53,14 @@ EnttecOpenUsbDMX.prototype.send_universe = function() {
             if(err){
                 console.log('ERR: ' + err);
             }
-            console.log('result:' + result)
-        });
+          });
 
 				}, 1)
 			})
 		}, 1)
 	})
+
+
 }
 
 EnttecOpenUsbDMX.prototype.start = function() {
