@@ -46,8 +46,15 @@ EnttecOpenUsbDMX.prototype.send_universe = function() {
 		setTimeout(function() {
 			self.dev.set({brk: false, rts: true}, function(err, r) {
 				setTimeout(function() {
-					console.log("\nwrite: ", Buffer.concat([Buffer([0]), self.universe.slice(1)]));
-					self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]));
+					//console.log("\nwrite: ", Buffer.concat([Buffer([0]), self.universe.slice(1)]));
+					//self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]));
+					self.dev.write(Buffer.concat([Buffer([0]), self.universe.slice(1)]),function(err,result){
+            if(err){
+                console.log('ERR: ' + err);
+            }
+            console.log('result:' + result)
+        });
+
 				}, 1)
 			})
 		}, 1)
