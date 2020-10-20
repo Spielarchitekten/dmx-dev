@@ -1,8 +1,8 @@
 "use strict"
 
 var SerialPort = require("serialport")
-const util = require('util');
-const EventEmitter = require('events').EventEmitter;
+//const util = require('util');
+//const EventEmitter = require('events').EventEmitter;
 
 function EnttecOpenUsbDMX(device_id, options) {
 
@@ -21,8 +21,7 @@ function EnttecOpenUsbDMX(device_id, options) {
 	var self = this
 	options = options || {}
 
-
-	this.universe = Buffer.alloc(513);
+	this.universe = new Buffer(513)
   this.readyToWrite = true;
   this.interval = 46;
 
